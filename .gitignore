@@ -1,0 +1,13 @@
+# Systeme et donnees locales
+.DS_Store
+Thumbs.db
+tmp/
+logs/
+
+# Generation intermediaire
+py/_gen/
+presets/*.tmp
+
+# Dependencies / cache (si jamais ajoutees localement)
+vendor/
+node_modules/

@@ -1,0 +1,50 @@
+{
+  "identity": "Salle-MINEFOP",
+  "security_profile": "Office",
+  "guest_subnet": "10.10.12.0/24",
+  "vlan_subnet": "10.100.120.0/24",
+  "ntp": true,
+  "nat": true,
+  "guest": false,
+  "vlan": true,
+  "firewall": true,
+  "bridges": [
+    {
+      "name": "bridge-lan",
+      "ports": [
+        "ether2",
+        "ether3",
+        "sfp1",
+        "ether4"
+      ]
+    }
+  ],
+  "wifi": [
+    {
+      "iface": "wifi3",
+      "ssid": "Salle-MINEFOP-Train",
+      "security": "WPA2-Personal",
+      "password": "formation-2026"
+    }
+  ],
+  "networks": [
+    {
+      "interface": "bridge-lan",
+      "address": "10.100.120.1",
+      "mask": 24,
+      "gateway": "10.100.120.1",
+      "dns": "10.100.120.1",
+      "dhcp": true,
+      "range_start": "10.100.120.10",
+      "range_end": "10.100.120.100"
+    },
+    {
+      "interface": "bridge-lan",
+      "address": "192.168.50.1",
+      "mask": 24,
+      "gateway": "192.168.50.1",
+      "dns": "192.168.50.1",
+      "dhcp": false
+    }
+  ]
+}

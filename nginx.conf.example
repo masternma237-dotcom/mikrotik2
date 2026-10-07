@@ -1,0 +1,45 @@
+# Exemple Nginx — Générateur MikroTik V2 (docroot = public/, PHP-FPM).
+# Adapter : server_name, chemin root, version du socket PHP-FPM.
+server {
+    listen 80;
+    server_name mikrotik2.lan;
+
+    # Seul public/ est expose : config/, App/, storage/ restent hors docroot.
+    root /srv/mikrotik2/public;
+    index index.php;
+
+    # Bloque l'accès aux fichiers de configuration/sensible, pas aux .json de presets.
+    location ~* \.(log|env|sql|ini|conf|example|key)$ {
+        deny all;
+        return 404;
+    }
+
+    # Fichiers caches et systemes de fichiers caches / hidden.
+    location ~ /\. {
+        deny all;
+        return 404;
+    }
+
+    location / {
+        try_files $uri $uri/ /index.php?$query_string;
+    }
+
+    # Reste courant : preset, docs, etc.
+    location ~* \.(css|js|png|svg|ico|json)$ {
+        expires 7d;
+        add_header Cache-Control "public";
+    }
+
+    location ~ \.php$ {
+        include fastcgi_params;
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        # Adapter la version du socket PHP-FPM a l'hote Proxmox :
+        fastcgi_pass unix:/var/run/php/php8.2-fpm.sock;
+    }
+
+    # Assets statiques : cache long (versionnes avec ?v=).
+    location /assets/ {
+        expires 7d;
+        add_header Cache-Control "public";
+    }
+}

@@ -1,0 +1,41 @@
+{
+  "identity": "MikroTik-Router-Home",
+  "security_profile": "Home",
+  "guest_subnet": "10.10.10.0/24",
+  "vlan_subnet": "10.100.100.0/24",
+  "ntp": false,
+  "nat": true,
+  "guest": false,
+  "vlan": false,
+  "firewall": true,
+  "bridges": [
+    {
+      "name": "bridge-lan",
+      "ports": [
+        "ether2",
+        "ether3",
+        "sfp1"
+      ]
+    }
+  ],
+  "wifi": [
+    {
+      "iface": "wifi1",
+      "ssid": "MikroTik-Home-24",
+      "security": "WPA2-Personal",
+      "password": "domicile-2026"
+    }
+  ],
+  "networks": [
+    {
+      "interface": "bridge-lan",
+      "address": "192.168.88.1",
+      "mask": 24,
+      "gateway": "192.168.88.1",
+      "dns": "192.168.88.1",
+      "dhcp": true,
+      "range_start": "192.168.88.10",
+      "range_end": "192.168.88.254"
+    }
+  ]
+}
